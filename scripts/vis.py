@@ -45,7 +45,7 @@ flow_events['end'] =pd.to_datetime(flow_events['Timerange'].str.split(" ").str[0
 import matplotlib.dates as mdates
 from matplotlib.backends.backend_pdf import PdfPages
 name_extract = dir_name.split("/")[1]
-pdf_path = f"internship/Visualizations/{name_extract}_visualization.pdf"
+pdf_path = f"Visualizations/{name_extract}_visualization.pdf"
 print("Converting Visualisation to pdfs")
 with PdfPages(pdf_path) as pdf:
 
@@ -85,9 +85,11 @@ with PdfPages(pdf_path) as pdf:
             event_name = flow_events.loc[i, 'Events']
 
             mid = start_e + (end_e - start_e)/2
-
+            color="yellow"
             if event_name == "Obstructive Apnea":
                 color = 'red'
+            elif event_name == "Body event":
+                color="grey"
             else:
                 color = 'yellow'
 

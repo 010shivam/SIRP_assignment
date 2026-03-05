@@ -95,11 +95,13 @@ step =int(0.5*window_size) #The overlap is 50%
 windows = []
 window_time = []
 event_labels = []
-
+participants =[]
 for file in participants_files:
     new_signal,new_timestamp=filtering(fs,lowcut,highcut,in_dir,file)
-
+    
     new_windows,new_window_time = create_windows(window_size,step,new_timestamp,new_signal)
+    n = len(new_windows)
+    new_part = [file]*n
 
     flow_events = pd.read_csv(f'{in_dir}/{file}/flow_events.csv')
     flow_events['start'] =pd.to_datetime(flow_events['Timerange'].str.split(" ").str[0] + " " + flow_events['Timerange'].str.split(" ").str[1].str.split("-").str[0],format="%d.%m.%Y %H:%M:%S,%f")
@@ -110,6 +112,7 @@ for file in participants_files:
 
     timestamp =np.concatenate((timestamp,new_timestamp),axis=0)
     filtered_signal =np.concatenate((filtered_signal,new_signal),axis=0)
+
     if len(windows)==0:
         windows=new_windows
     else:
@@ -121,6 +124,7 @@ for file in participants_files:
         window_time =np.concatenate((window_time,new_window_time),axis=0)
     
     event_labels =np.concatenate((event_labels,new_event_labels),axis=0)
+    participants =np.concatenate((participants,new_part),axis=0)
     
 print(len(windows),len(window_time),len(event_labels))
 print("Creating CSV file...")
@@ -133,7 +137,7 @@ with open(f"{out_dir}/breathing_dataset.pkl","wb") as f:
 
 print("Breathing_dataset.pkl created")
 print("Creating CSV file...")
-sleep_stage_dataset = {"window_time":window_time,"signals":windows,"labels":event_labels}
+sleep_stage_dataset = {"window_time":window_time,"signals":windows,"labels":event_labels,"participants":participants}
 with open(f"{out_dir}/sleep_stage_dataset.pkl","wb") as f:
     pickle.dump(sleep_stage_dataset,f)
 print("sleep_stages_dataset.pkl created")
