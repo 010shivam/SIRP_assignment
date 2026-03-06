@@ -53,3 +53,11 @@ The confusion matrix shows strong detection of apnea patterns (85% recall on obs
 - Code was totally written by me, no use of AI tools in thinking and implementing code logic or modelling
 - For Debugging purpose StackOverflow and official documentation of libraries were reffered
 - For Research of sleep apnea and documentation of README.md and report.pdf, ChatGPT was used as helper with grammer and structure.
+
+## Important Notes
+- The names of the original text file were changed from original in order to handle it, it is suggested to rename the text files for each participants to flow_events.txt, nasal_airflow.txt, sleep_profile.txt, spo2.txt to ensure to smooth conversion from txt to csv.
+
+- Due to size limitation of size(max 60 MB) upload in github, breathing_dataset.csv and sleep_stages_dataset.pkl hasn't been uploaded, you are required to generate it by yourself on local system using the following command
+
+`python scripts/create_dataset.py -in_dir "Data" -out_dir "Dataset"`
+- For visulisation code `python scripts/vis.py -name "<Participant's Folder>"`
