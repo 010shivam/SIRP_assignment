@@ -1,4 +1,3 @@
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
@@ -54,12 +53,12 @@ for test_pid in unique_participants:
     
     X_train, X_test = X[train_idx], X[test_idx]
     y_train, y_test = y[train_idx], y[test_idx]
-    print(X_train.shape)  # should be (num_samples, 960, 1)
+    print(X_train.shape) 
     print(X_test.shape)
     classes = np.unique(y_train)
     class_weights = compute_class_weight(class_weight='balanced', classes=classes, y=y_train.ravel())
     class_weights = dict(zip(classes, class_weights))
-    model = build_model()  # reinitialize CNN for each fold
+    model = build_model()  
     print(classes)
     model.fit(
         X_train, y_train,
@@ -72,18 +71,17 @@ for test_pid in unique_participants:
     # Evaluate metrics
     y_pred_probs = model.predict(X_test)
     
-    # Store accuracy, precision, recall, confusion matrix per fold
+    # Storing accuracy, precision, recall, confusion matrix per fold
     # y_pred = np.argmax(y_pred_probs, axis=-1)
     y_pred = y_pred_probs.argmax(axis=1)
     
-    # Compute metrics
     acc = accuracy_score(y_test, y_pred)
     prec = precision_score(y_test, y_pred, average='macro')
     rec = recall_score(y_test, y_pred, average='macro')
     f1 = f1_score(y_test, y_pred, average='macro')
     cm = confusion_matrix(y_test, y_pred,labels=classes)
     
-    # Store metrics for this fold
+    # Storing metrics for this fold
     fold_accuracies.append(acc)
     fold_precisions.append(prec)
     fold_recalls.append(rec)
@@ -92,7 +90,7 @@ for test_pid in unique_participants:
     
     print(f"Fold Test Participant {test_pid}  Accuracy: {acc:.3f}, Precision: {prec:.3f}, Recall: {rec:.3f}")
 
-print("\n--- LOPO CV Results ---")
+print("\nLOPO CV Results")
 print("Average Accuracy:", np.mean(fold_accuracies))
 print("Average Precision:", np.mean(fold_precisions))
 print("Average Recall:", np.mean(fold_recalls))

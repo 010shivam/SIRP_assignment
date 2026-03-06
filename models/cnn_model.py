@@ -7,7 +7,7 @@ def build_model():
         layers.Conv1D(64, 3, activation='relu'),
         layers.MaxPooling1D(2),
         layers.Flatten(),
-        layers.Dense(64, activation='relu', kernel_regularizer=regularizers.l2(0.001)),
+        layers.Dense(64, activation='relu', kernel_regularizer=regularizers.l2(0.007)),
         layers.Dropout(0.4),
         layers.Dense(5, activation='softmax')
     ])
