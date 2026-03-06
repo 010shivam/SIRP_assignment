@@ -44,7 +44,3 @@ def convert_flow_events(folder):
           df.to_csv(f"{folder}/flow_events.csv", index=False)
 
           
-# for i in range(1,6):
-#     convert_csv(f"AP0{i}",i)
-#     handle_flow_events(f"AP0{i}",i)
-# Read only data part

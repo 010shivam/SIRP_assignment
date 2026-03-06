@@ -2,6 +2,6 @@
 .venv/
 
 Dataset/*
-!Dataset/README.md
+!Dataset/data.md
 
 

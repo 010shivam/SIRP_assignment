@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import argparse
 from utils import convert_csv, convert_flow_events
-import os
 import matplotlib.pyplot as plt
 
 parser =  argparse.ArgumentParser(description="Visualisation pdf generator")
@@ -112,8 +111,6 @@ with PdfPages(pdf_path) as pdf:
         plt.suptitle(f"{current} to {current + window}")
         plt.setp(axes[-1].get_xticklabels(), rotation=90, ha='right')
         # plt.show()
-
-       # leave space for suptitle + ticks
         pdf.savefig(fig)
         plt.close(fig)
         current += window
